@@ -189,6 +189,7 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid rgba(255,215,0,0.1);
+            position: relative;
         }
 
         .lesson-thumb {
@@ -224,9 +225,40 @@
             border-radius: 2px;
         }
 
+        /* Modo Admin */
+        .admin-mode .lesson-card::before {
+            content: '✏️';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffd700;
+            color: #1a1a2e;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        [contenteditable="true"] {
+            border: 2px dashed #ffd700 !important;
+            padding: 5px;
+            cursor: text;
+            background: rgba(255,215,0,0.1);
+        }
+
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2rem; }
             .modalities-grid { grid-template-columns: 1fr; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
     </style>
 </head>
@@ -275,11 +307,11 @@
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" placeholder="seu@email.com" required>
+                    <input type="email" id="login-email" placeholder="seu@email.com" required>
                 </div>
                 <div class="form-group">
                     <label>Senha</label>
-                    <input type="password" placeholder="••••••" required>
+                    <input type="password" id="login-senha" placeholder="••••••" required>
                 </div>
                 <button type="submit" class="btn-submit">Entrar</button>
             </form>
@@ -299,18 +331,23 @@
             <button class="btn-primary" onclick="logout()">Sair</button>
         </div>
         
-        <div class="lessons-grid" id="lessons-grid">
-            <!-- Aulas inseridas via JS -->
-        </div>
+        <div class="lessons-grid" id="lessons-grid"></div>
     </div>
 
     <script>
-        const lessons = [
+        // CONFIGURAÇÃO DO ADMIN - ALTERE AQUI!
+        const ADMIN_EMAIL = "admin@studiorenatomota.com";
+        const ADMIN_SENHA = "renato123";  // ← MUDE PARA SUA SENHA!
+
+        let lessons = [
             { id: 1, title: "Fundamentos do Abraço", modality: "Tango", level: "Iniciante", duration: "15:30", progress: 100, icon: "🕺" },
             { id: 2, title: "Caminhada e Base", modality: "Samba", level: "Iniciante", duration: "22:45", progress: 75, icon: "💃" },
             { id: 3, title: "Giros Básicos", modality: "Zouk", level: "Iniciante", duration: "18:20", progress: 30, icon: "🌊" },
             { id: 4, title: "Técnica de Condução", modality: "Valsa", level: "Intermediário", duration: "25:10", progress: 0, icon: "🎵" }
         ];
+
+        let isAdmin = false;
+        let editMode = false;
 
         function showLogin() {
             document.getElementById('home').style.display = 'none';
@@ -323,24 +360,45 @@
             document.querySelector('.modalities').style.display = 'block';
             document.getElementById('login').style.display = 'none';
             document.getElementById('dashboard').classList.remove('active');
+            document.body.classList.remove('admin-mode');
+            isAdmin = false;
+            // Remove toolbar se existir
+            const toolbar = document.getElementById('admin-toolbar');
+            if (toolbar) toolbar.remove();
         }
 
         function handleLogin(e) {
             e.preventDefault();
-            document.getElementById('login').style.display = 'none';
-            document.getElementById('dashboard').classList.add('active');
-            renderLessons();
+            const email = document.getElementById('login-email').value;
+            const senha = document.getElementById('login-senha').value;
+            
+            if (email === ADMIN_EMAIL && senha === ADMIN_SENHA) {
+                // Modo Administrador
+                isAdmin = true;
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+                document.body.classList.add('admin-mode');
+                renderLessons();
+                addAdminToolbar();
+                showToast('✅ Modo Administrador ativado!');
+            } else {
+                // Modo Aluno
+                isAdmin = false;
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+                renderLessons();
+                showToast('Bem-vindo, Aluno!');
+            }
         }
 
         function logout() {
-            document.getElementById('dashboard').classList.remove('active');
             showHome();
         }
 
         function renderLessons() {
             const grid = document.getElementById('lessons-grid');
             grid.innerHTML = lessons.map(lesson => `
-                <div class="lesson-card">
+                <div class="lesson-card" onclick="${isAdmin ? 'editLesson(' + lesson.id + ')' : ''}">
                     <div class="lesson-thumb">${lesson.icon}</div>
                     <div class="lesson-info">
                         <h4>${lesson.title}</h4>
@@ -356,6 +414,169 @@
                 </div>
             `).join('');
         }
+
+        // ================= FERRAMENTAS DO ADMIN =================
+
+        function addAdminToolbar() {
+            const toolbar = document.createElement('div');
+            toolbar.id = 'admin-toolbar';
+            toolbar.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; right: 0; background: #1a1a2e; 
+                            border-bottom: 3px solid #ffd700; padding: 15px 20px; z-index: 9999;
+                            display: flex; justify-content: space-between; align-items: center;
+                            box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+                    <div style="color: #ffd700; font-weight: bold; font-size: 1.1rem;">
+                        ✦ STUDIO RENATO MOTA - MODO EDIÇÃO
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button onclick="toggleEditMode()" style="background: ${editMode ? '#e94560' : '#ffd700'}; 
+                                color: ${editMode ? 'white' : '#1a1a2e'}; 
+                                border: none; padding: 10px 20px; border-radius: 5px; 
+                                cursor: pointer; font-weight: bold; font-size: 0.9rem;">
+                            ${editMode ? '✋ Parar Edição' : '✏️ Editar Textos'}
+                        </button>
+                        <button onclick="addNewLesson()" style="background: #4ade80; color: #064e3b; 
+                                border: none; padding: 10px 20px; border-radius: 5px; 
+                                cursor: pointer; font-weight: bold; font-size: 0.9rem;">
+                            ➕ Nova Aula
+                        </button>
+                        <button onclick="saveAll()" style="background: #3b82f6; color: white; 
+                                border: none; padding: 10px 20px; border-radius: 5px; 
+                                cursor: pointer; font-weight: bold; font-size: 0.9rem;">
+                            💾 Salvar Tudo
+                        </button>
+                        <button onclick="previewMode()" style="background: transparent; color: #ffd700; 
+                                border: 2px solid #ffd700; padding: 10px 20px; border-radius: 5px; 
+                                cursor: pointer; font-weight: bold; font-size: 0.9rem;">
+                            👁️ Preview
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(toolbar);
+            document.body.style.paddingTop = '80px';
+        }
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            const elements = document.querySelectorAll('h1, h2, h3, p:not(.lesson-info p)');
+            
+            elements.forEach(el => {
+                el.contentEditable = editMode;
+            });
+            
+            // Atualiza botão
+            addAdminToolbar();
+            
+            showToast(editMode ? '✏️ Clique em qualquer texto para editar' : '✋ Edição desativada');
+        }
+
+        function addNewLesson() {
+            const title = prompt('📚 Título da nova aula:');
+            if (!title) return;
+            
+            const modality = prompt('🎭 Modalidade (Samba, Tango, Valsa, Forró, etc):') || 'Geral';
+            const level = prompt('📊 Nível (Iniciante, Intermediário, Avançado):') || 'Iniciante';
+            const duration = prompt('⏱️ Duração (ex: 20:30):') || '20:00';
+            
+            const icons = {
+                'Samba': '💃', 'Tango': '🕺', 'Valsa': '🎵', 
+                'Forró': '🔥', 'Salsa': '🌴', 'Zouk': '⚡',
+                'Bachata': '💕', 'Kizomba': '🎶', 'Geral': '🎭'
+            };
+            
+            const newLesson = {
+                id: Date.now(),
+                title: title,
+                modality: modality,
+                level: level,
+                duration: duration,
+                progress: 0,
+                icon: icons[modality] || '🎭'
+            };
+            
+            lessons.push(newLesson);
+            renderLessons();
+            showToast('✅ Aula adicionada: ' + title);
+        }
+
+        function editLesson(id) {
+            if (!isAdmin) return;
+            
+            const lesson = lessons.find(l => l.id === id);
+            if (!lesson) return;
+            
+            const newTitle = prompt('✏️ Novo título:', lesson.title);
+            if (newTitle === null) return;
+            
+            const newModality = prompt('🎭 Nova modalidade:', lesson.modality) || lesson.modality;
+            const newLevel = prompt('📊 Novo nível:', lesson.level) || lesson.level;
+            const newDuration = prompt('⏱️ Nova duração:', lesson.duration) || lesson.duration;
+            
+            lesson.title = newTitle || lesson.title;
+            lesson.modality = newModality;
+            lesson.level = newLevel;
+            lesson.duration = newDuration;
+            
+            renderLessons();
+            showToast('✅ Aula atualizada!');
+        }
+
+        function saveAll() {
+            const data = {
+                lessons: lessons,
+                lastEdit: new Date().toLocaleString('pt-BR'),
+                pageTitle: document.querySelector('h1').textContent
+            };
+            
+            localStorage.setItem('studioRenatoMota', JSON.stringify(data));
+            showToast('💾 Salvo! ' + data.lastEdit);
+        }
+
+        function previewMode() {
+            // Esconde toolbar temporariamente
+            document.getElementById('admin-toolbar').style.display = 'none';
+            document.body.style.paddingTop = '0';
+            
+            if (editMode) toggleEditMode();
+            
+            showToast('👁️ Preview ativo. Atualize a página para voltar ao editor.');
+        }
+
+        function showToast(message) {
+            // Remove toast anterior se existir
+            const existing = document.querySelector('.toast-notification');
+            if (existing) existing.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed; bottom: 30px; right: 30px; 
+                background: linear-gradient(135deg, #ffd700, #ffed4e); 
+                color: #1a1a2e; padding: 20px 30px; border-radius: 12px; 
+                font-weight: bold; z-index: 10000; 
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                animation: slideIn 0.3s ease; font-size: 1rem;
+                max-width: 400px; text-align: center;
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Carregar dados salvos
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('studioRenatoMota');
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.lessons) lessons = data.lessons;
+                console.log('Dados carregados:', data.lastEdit);
+            }
+        });
     </script>
 
 </body>
