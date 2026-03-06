@@ -1,24 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-	<title></title>
-	<meta name="generator" content="LibreOffice 25.8.4.2 (Linux)"/>
-	<meta name="created" content="00:00:00"/>
-	<meta name="changed" content="00:00:00"/>
-	<style type="text/css">
-		@page { size: 8.27in 11.69in; margin: 0.79in }
-		p { margin-bottom: 0.1in; line-height: 115%; background: transparent }
-		pre { font-size: 10pt; font-family: "Liberation Mono", monospace; background: transparent }
-	</style>
-</head>
-<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;pt-BR&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-    &lt;title&gt;Academia de Danças - Editor Visual&lt;/title&gt;
-    &lt;style&gt;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Renato Mota - Formação em Danças de Salão</title>
+    <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
@@ -27,429 +13,28 @@
             --accent: #e94560;
             --gold: #ffd700;
             --text: #eaeaea;
-            --glass: rgba(255, 255, 255, 0.05);
-            --editor-bg: #0f0f1e;
-            --panel-bg: #1e1e2e;
         }
 
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
             background: var(--primary);
             color: var(--text);
-            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* MODO EDITOR - Interface Wix-style */
-        .editor-mode {
-            padding-top: 60px;
-        }
-
-        /* Barra de ferramentas superior */
-        .editor-toolbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: var(--editor-bg);
-            border-bottom: 1px solid rgba(255,215,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 1rem;
-            z-index: 9999;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-
-        .toolbar-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-editor {
-            font-weight: bold;
-            color: var(--gold);
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .editor-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-left: 2rem;
-        }
-
-        .editor-tab {
-            padding: 0.5rem 1rem;
-            background: rgba(255,255,255,0.05);
-            border: none;
-            color: var(--text);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-
-        .editor-tab:hover, .editor-tab.active {
-            background: var(--gold);
-            color: var(--primary);
-        }
-
-        .toolbar-right {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-editor {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-preview {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .btn-preview:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-
-        .btn-save {
-            background: var(--gold);
-            color: var(--primary);
-        }
-
-        .btn-save:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255,215,0,0.3);
-        }
-
-        .btn-publish {
-            background: var(--accent);
-            color: white;
-        }
-
-        /* Painel lateral de edição */
-        .editor-sidebar {
-            position: fixed;
-            right: 0;
-            top: 60px;
-            bottom: 0;
-            width: 300px;
-            background: var(--panel-bg);
-            border-left: 1px solid rgba(255,215,0,0.1);
-            padding: 1.5rem;
-            overflow-y: auto;
-            z-index: 9998;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .editor-sidebar.active {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .sidebar-title {
-            color: var(--gold);
-            font-size: 1.1rem;
-        }
-
-        .close-sidebar {
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0.7;
-        }
-
-        .close-sidebar:hover { opacity: 1; }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: var(--text);
-            font-family: inherit;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .color-picker {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .color-option {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .color-option:hover, .color-option.active {
-            border-color: white;
-            transform: scale(1.1);
-        }
-
-        .btn-add {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255,215,0,0.1);
-            border: 2px dashed var(--gold);
-            color: var(--gold);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 1rem;
-        }
-
-        .btn-add:hover {
-            background: rgba(255,215,0,0.2);
-        }
-
-        /* Área de conteúdo editável */
-        .editable-content {
-            margin-right: 0;
-            transition: margin-right 0.3s;
-            min-height: 100vh;
-        }
-
-        .editable-content.sidebar-open {
-            margin-right: 300px;
-        }
-
-        /* Elementos editáveis */
-        .editable {
-            position: relative;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .editable:hover {
-            border-color: rgba(255,215,0,0.3);
-        }
-
-        .editable.active {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(255,215,0,0.1);
-        }
-
-        .edit-controls {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            display: none;
-            gap: 0.5rem;
-            z-index: 100;
-        }
-
-        .editable:hover .edit-controls, .editable.active .edit-controls {
-            display: flex;
-        }
-
-        .btn-edit {
-            padding: 0.4rem 0.8rem;
-            background: var(--gold);
-            color: var(--primary);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: bold;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .btn-delete {
-            background: var(--accent);
-            color: white;
-        }
-
-        .btn-move {
-            background: #4a5568;
-            color: white;
-            cursor: move;
-        }
-
-        /* Seções do site */
-        .site-section {
-            position: relative;
-            padding: 4rem 5%;
-        }
-
-        .section-tools {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            display: none;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .site-section:hover .section-tools {
-            display: flex;
-        }
-
-        .tool-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--panel-bg);
-            border: 1px solid rgba(255,215,0,0.3);
-            color: var(--gold);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-        }
-
-        .tool-btn:hover {
-            background: var(--gold);
-            color: var(--primary);
-            transform: scale(1.1);
-        }
-
-        /* Preview Mode */
-        .preview-mode .editor-toolbar,
-        .preview-mode .editor-sidebar,
-        .preview-mode .edit-controls,
-        .preview-mode .section-tools {
-            display: none !important;
-        }
-
-        .preview-mode {
-            padding-top: 0 !important;
-        }
-
-        .preview-mode .editable {
-            border: none !important;
-            pointer-events: none;
-        }
-
-        /* Modal de Adicionar Aula */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: var(--panel-bg);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 1px solid rgba(255,215,0,0.2);
-        }
-
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            color: var(--gold);
-            font-size: 1.3rem;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        .modal-footer {
-            padding: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
-
-        /* Componentes do Site Original */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: radial-gradient(circle at 20% 50%, rgba(233,69,96,0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255,215,0,0.1) 0%, transparent 50%);
-            position: relative;
+            background: radial-gradient(circle at 20% 50%, rgba(233,69,96,0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255,215,0,0.2) 0%, transparent 50%);
+            padding: 2rem;
         }
 
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
             background: linear-gradient(45deg, #fff, var(--gold));
             -webkit-background-clip: text;
@@ -460,6 +45,9 @@
             font-size: 1.3rem;
             margin-bottom: 2rem;
             opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .btn-primary {
@@ -473,24 +61,40 @@
             text-decoration: none;
             display: inline-block;
             font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+        }
+
+        .modalities {
+            padding: 4rem 5%;
+            background: var(--secondary);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--gold);
         }
 
         .modalities-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .modality-card {
-            background: var(--glass);
+            background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,215,0,0.1);
             border-radius: 15px;
             padding: 2rem;
             text-align: center;
             transition: all 0.3s;
-            cursor: pointer;
         }
 
         .modality-card:hover {
@@ -506,743 +110,253 @@
         .modality-card h3 {
             color: var(--gold);
             margin-bottom: 0.5rem;
+            font-size: 1.5rem;
         }
 
-        .section-title {
+        .login-section {
+            padding: 4rem 5%;
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
+        }
+
+        .login-box {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
             color: var(--gold);
         }
 
-        /* Dashboard do Aluno (simplificado para edição) */
-        .dashboard-preview {
-            background: var(--secondary);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 2rem;
-        }
-
-        .lessons-grid-editor {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .lesson-card-editor {
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            padding: 1rem;
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gold);
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .dashboard {
+            display: none;
+            padding: 2rem 5%;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .lesson-card {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,215,0,0.1);
         }
 
         .lesson-thumb {
-            height: 120px;
+            height: 180px;
             background: linear-gradient(135deg, var(--secondary), var(--primary));
-            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 3rem;
+        }
+
+        .lesson-info {
+            padding: 1.5rem;
+        }
+
+        .lesson-info h4 {
+            color: var(--gold);
             margin-bottom: 0.5rem;
         }
 
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .editor-sidebar {
-                width: 100%;
-            }
-            .editable-content.sidebar-open {
-                margin-right: 0;
-            }
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
         }
 
-        /* Animações */
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .animate-in {
-            animation: slideIn 0.3s ease;
-        }
-
-        /* Toggle Switch */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: &quot;&quot;;
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: var(--gold);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        /* Notificação */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+        .progress-fill {
+            height: 100%;
             background: var(--gold);
-            color: var(--primary);
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-weight: bold;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 10001;
+            border-radius: 2px;
         }
 
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2rem; }
+            .modalities-grid { grid-template-columns: 1fr; }
         }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body class=&quot;editor-mode&quot;&gt;
+    </style>
+</head>
+<body>
 
-    &lt;!-- BARRA DE FERRAMENTAS SUPERIOR --&gt;
-    &lt;div class=&quot;editor-toolbar&quot;&gt;
-        &lt;div class=&quot;toolbar-left&quot;&gt;
-            &lt;div class=&quot;logo-editor&quot;&gt;
-                &lt;span&gt;✦&lt;/span&gt;
-                &lt;span&gt;Editor Visual&lt;/span&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;editor-tabs&quot;&gt;
-                &lt;button class=&quot;editor-tab active&quot; onclick=&quot;switchTab('site')&quot;&gt;🌐 Site&lt;/button&gt;
-                &lt;button class=&quot;editor-tab&quot; onclick=&quot;switchTab('aulas')&quot;&gt;📚 Aulas&lt;/button&gt;
-                &lt;button class=&quot;editor-tab&quot; onclick=&quot;switchTab('alunos')&quot;&gt;👥 Alunos&lt;/button&gt;
-                &lt;button class=&quot;editor-tab&quot; onclick=&quot;switchTab('config')&quot;&gt;⚙️ Config&lt;/button&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;toolbar-right&quot;&gt;
-            &lt;button class=&quot;btn-editor btn-preview&quot; onclick=&quot;togglePreview()&quot;&gt;
-                &lt;span&gt;👁️&lt;/span&gt;
-                &lt;span&gt;Preview&lt;/span&gt;
-            &lt;/button&gt;
-            &lt;button class=&quot;btn-editor btn-save&quot; onclick=&quot;saveContent()&quot;&gt;
-                &lt;span&gt;💾&lt;/span&gt;
-                &lt;span&gt;Salvar&lt;/span&gt;
-            &lt;/button&gt;
-            &lt;button class=&quot;btn-editor btn-publish&quot; onclick=&quot;publishSite()&quot;&gt;
-                &lt;span&gt;🚀&lt;/span&gt;
-                &lt;span&gt;Publicar&lt;/span&gt;
-            &lt;/button&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Studio Renato Mota</h1>
+            <p>Formação em Danças de Salão. Aprenda com quem entende de verdade. Do básico ao avançado, transforme sua dança.</p>
+            <button class="btn-primary" onclick="showLogin()">Área do Aluno</button>
+        </div>
+    </section>
 
-    &lt;!-- PAINEL LATERAL DE EDIÇÃO --&gt;
-    &lt;div class=&quot;editor-sidebar&quot; id=&quot;sidebar&quot;&gt;
-        &lt;div class=&quot;sidebar-header&quot;&gt;
-            &lt;h3 class=&quot;sidebar-title&quot; id=&quot;sidebar-title&quot;&gt;Editar Seção&lt;/h3&gt;
-            &lt;button class=&quot;close-sidebar&quot; onclick=&quot;closeSidebar()&quot;&gt;×&lt;/button&gt;
-        &lt;/div&gt;
+    <!-- MODALIDADES -->
+    <section class="modalities">
+        <h2 class="section-title">Nossas Modalidades</h2>
+        <div class="modalities-grid">
+            <div class="modality-card">
+                <div class="modality-icon">💃</div>
+                <h3>Samba de Gafieira</h3>
+                <p>A elegância do Rio em cada passo. Do básico aos giros mais complexos.</p>
+            </div>
+            <div class="modality-card">
+                <div class="modality-icon">🕺</div>
+                <h3>Tango Argentino</h3>
+                <p>Paixão e precisão. Aprenda a técnica e o abraço do tango.</p>
+            </div>
+            <div class="modality-card">
+                <div class="modality-icon">🎵</div>
+                <h3>Valsa</h3>
+                <p>Clássica e atemporal. Perfeita para casamentos e eventos formais.</p>
+            </div>
+            <div class="modality-card">
+                <div class="modality-icon">🔥</div>
+                <h3>Forró</h3>
+                <p>A alegria do Nordeste. Pé-de-serra, universitário e estilizado.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOGIN -->
+    <section class="login-section" id="login" style="display: none;">
+        <h2 class="section-title">Área do Aluno</h2>
+        <div class="login-box">
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" placeholder="••••••" required>
+                </div>
+                <button type="submit" class="btn-submit">Entrar</button>
+            </form>
+            <p style="margin-top: 1rem; opacity: 0.7; font-size: 0.9rem;">
+                <a href="#" onclick="showHome()" style="color: var(--gold);">← Voltar ao site</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <div class="dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <div>
+                <h2 style="color: var(--gold);">Minhas Aulas</h2>
+                <p style="opacity: 0.8;">Bem-vindo ao Studio Renato Mota</p>
+            </div>
+            <button class="btn-primary" onclick="logout()">Sair</button>
+        </div>
         
-        &lt;div id=&quot;sidebar-content&quot;&gt;
-            &lt;!-- Conteúdo dinâmico --&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
+        <div class="lessons-grid" id="lessons-grid">
+            <!-- Aulas inseridas via JS -->
+        </div>
+    </div>
 
-    &lt;!-- ÁREA DE CONTEÚDO EDITÁVEL --&gt;
-    &lt;div class=&quot;editable-content&quot; id=&quot;main-content&quot;&gt;
-        
-        &lt;!-- HERO SECTION --&gt;
-        &lt;section class=&quot;site-section hero editable&quot; data-type=&quot;hero&quot; id=&quot;hero-section&quot;&gt;
-            &lt;div class=&quot;section-tools&quot;&gt;
-                &lt;button class=&quot;tool-btn&quot; onclick=&quot;editSection('hero')&quot; title=&quot;Editar&quot;&gt;✏️&lt;/button&gt;
-                &lt;button class=&quot;tool-btn&quot; onclick=&quot;moveSection('up')&quot; title=&quot;Mover para cima&quot;&gt;⬆️&lt;/button&gt;
-                &lt;button class=&quot;tool-btn&quot; onclick=&quot;moveSection('down')&quot; title=&quot;Mover para baixo&quot;&gt;⬇️&lt;/button&gt;
-            &lt;/div&gt;
-            
-            &lt;div class=&quot;hero-content&quot;&gt;
-                &lt;h1 class=&quot;editable-text&quot; data-field=&quot;title&quot;&gt;Domine a Arte das Danças de Salão&lt;/h1&gt;
-                &lt;p class=&quot;editable-text&quot; data-field=&quot;subtitle&quot;&gt;Aprenda com os melhores professores. Do básico ao avançado, transforme seu corpo e sua alma através da dança.&lt;/p&gt;
-                &lt;button class=&quot;btn-primary editable-text&quot; data-field=&quot;cta&quot;&gt;Começar Agora&lt;/button&gt;
-            &lt;/div&gt;
-        &lt;/section&gt;
-
-        &lt;!-- MODALITIES SECTION --&gt;
-        &lt;section class=&quot;site-section editable&quot; data-type=&quot;modalities&quot; style=&quot;background: var(--secondary);&quot; id=&quot;modalities-section&quot;&gt;
-            &lt;div class=&quot;section-tools&quot;&gt;
-                &lt;button class=&quot;tool-btn&quot; onclick=&quot;editSection('modalities')&quot; title=&quot;Editar&quot;&gt;✏️&lt;/button&gt;
-                &lt;button class=&quot;tool-btn&quot; onclick=&quot;addModality()&quot; title=&quot;Adicionar Modalidade&quot;&gt;➕&lt;/button&gt;
-            &lt;/div&gt;
-            
-            &lt;h2 class=&quot;section-title editable-text&quot; data-field=&quot;section-title&quot;&gt;Nossas Modalidades&lt;/h2&gt;
-            
-            &lt;div class=&quot;modalities-grid&quot; id=&quot;modalities-grid&quot;&gt;
-                &lt;div class=&quot;modality-card editable&quot; data-id=&quot;1&quot;&gt;
-                    &lt;div class=&quot;edit-controls&quot;&gt;
-                        &lt;button class=&quot;btn-edit&quot; onclick=&quot;editModality(1)&quot;&gt;Editar&lt;/button&gt;
-                        &lt;button class=&quot;btn-delete&quot; onclick=&quot;deleteModality(1)&quot;&gt;🗑️&lt;/button&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;modality-icon editable-text&quot; data-field=&quot;icon&quot;&gt;💃&lt;/div&gt;
-                    &lt;h3 class=&quot;editable-text&quot; data-field=&quot;name&quot;&gt;Samba de Gafieira&lt;/h3&gt;
-                    &lt;p class=&quot;editable-text&quot; data-field=&quot;desc&quot;&gt;A elegância do Rio em cada passo. Do básico aos giros mais complexos.&lt;/p&gt;
-                &lt;/div&gt;
-                
-                &lt;div class=&quot;modality-card editable&quot; data-id=&quot;2&quot;&gt;
-                    &lt;div class=&quot;edit-controls&quot;&gt;
-                        &lt;button class=&quot;btn-edit&quot; onclick=&quot;editModality(2)&quot;&gt;Editar&lt;/button&gt;
-                        &lt;button class=&quot;btn-delete&quot; onclick=&quot;deleteModality(2)&quot;&gt;🗑️&lt;/button&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;modality-icon editable-text&quot; data-field=&quot;icon&quot;&gt;🕺&lt;/div&gt;
-                    &lt;h3 class=&quot;editable-text&quot; data-field=&quot;name&quot;&gt;Tango Argentino&lt;/h3&gt;
-                    &lt;p class=&quot;editable-text&quot; data-field=&quot;desc&quot;&gt;Paixão e precisão. Aprenda a técnica e o abraço do tango.&lt;/p&gt;
-                &lt;/div&gt;
-                
-                &lt;div class=&quot;modality-card editable&quot; data-id=&quot;3&quot;&gt;
-                    &lt;div class=&quot;edit-controls&quot;&gt;
-                        &lt;button class=&quot;btn-edit&quot; onclick=&quot;editModality(3)&quot;&gt;Editar&lt;/button&gt;
-                        &lt;button class=&quot;btn-delete&quot; onclick=&quot;deleteModality(3)&quot;&gt;🗑️&lt;/button&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;modality-icon editable-text&quot; data-field=&quot;icon&quot;&gt;🎵&lt;/div&gt;
-                    &lt;h3 class=&quot;editable-text&quot; data-field=&quot;name&quot;&gt;Valsa&lt;/h3&gt;
-                    &lt;p class=&quot;editable-text&quot; data-field=&quot;desc&quot;&gt;Clássica e atemporal. Perfeita para casamentos e eventos formais.&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/section&gt;
-
-        &lt;!-- AULAS SECTION (Gerenciamento) --&gt;
-        &lt;section class=&quot;site-section editable&quot; data-type=&quot;lessons&quot; id=&quot;lessons-section&quot;&gt;
-            &lt;div class=&quot;section-tools&quot;&gt;
-                &lt;button class=&quot;tool-btn&quot; onclick=&quot;openAddLessonModal()&quot; title=&quot;Adicionar Aula&quot;&gt;➕&lt;/button&gt;
-            &lt;/div&gt;
-            
-            &lt;h2 class=&quot;section-title&quot;&gt;Gerenciar Aulas&lt;/h2&gt;
-            &lt;p style=&quot;text-align: center; opacity: 0.8; margin-bottom: 2rem;&quot;&gt;Clique em &quot;Adicionar Aula&quot; ou edite as existentes&lt;/p&gt;
-            
-            &lt;div class=&quot;dashboard-preview&quot;&gt;
-                &lt;div class=&quot;lessons-grid-editor&quot; id=&quot;lessons-grid-editor&quot;&gt;
-                    &lt;!-- Aulas serão inseridas aqui via JS --&gt;
-                &lt;/div&gt;
-                &lt;button class=&quot;btn-add&quot; onclick=&quot;openAddLessonModal()&quot;&gt;
-                    &lt;span style=&quot;font-size: 1.5rem;&quot;&gt;+&lt;/span&gt;
-                    &lt;div&gt;Adicionar Nova Aula&lt;/div&gt;
-                &lt;/button&gt;
-            &lt;/div&gt;
-        &lt;/section&gt;
-
-    &lt;/div&gt;
-
-    &lt;!-- MODAL: ADICIONAR/EDITAR AULA --&gt;
-    &lt;div class=&quot;modal-overlay&quot; id=&quot;lesson-modal&quot;&gt;
-        &lt;div class=&quot;modal&quot;&gt;
-            &lt;div class=&quot;modal-header&quot;&gt;
-                &lt;h3 class=&quot;modal-title&quot; id=&quot;modal-title&quot;&gt;Adicionar Nova Aula&lt;/h3&gt;
-                &lt;button class=&quot;modal-close&quot; onclick=&quot;closeModal()&quot;&gt;×&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;modal-body&quot;&gt;
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;Título da Aula&lt;/label&gt;
-                    &lt;input type=&quot;text&quot; id=&quot;lesson-title&quot; placeholder=&quot;Ex: Fundamentos do Abraço&quot;&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;Modalidade&lt;/label&gt;
-                    &lt;select id=&quot;lesson-modality&quot;&gt;
-                        &lt;option&gt;Samba&lt;/option&gt;
-                        &lt;option&gt;Tango&lt;/option&gt;
-                        &lt;option&gt;Valsa&lt;/option&gt;
-                        &lt;option&gt;Forró&lt;/option&gt;
-                        &lt;option&gt;Salsa&lt;/option&gt;
-                        &lt;option&gt;Zouk&lt;/option&gt;
-                    &lt;/select&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;Nível&lt;/label&gt;
-                    &lt;select id=&quot;lesson-level&quot;&gt;
-                        &lt;option value=&quot;iniciante&quot;&gt;Iniciante&lt;/option&gt;
-                        &lt;option value=&quot;intermediario&quot;&gt;Intermediário&lt;/option&gt;
-                        &lt;option value=&quot;avancado&quot;&gt;Avançado&lt;/option&gt;
-                    &lt;/select&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;Duração (minutos)&lt;/label&gt;
-                    &lt;input type=&quot;text&quot; id=&quot;lesson-duration&quot; placeholder=&quot;Ex: 15:30&quot;&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;Descrição&lt;/label&gt;
-                    &lt;textarea id=&quot;lesson-desc&quot; placeholder=&quot;Descreva o conteúdo da aula...&quot;&gt;&lt;/textarea&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;Link do Vídeo (YouTube/Vimeo)&lt;/label&gt;
-                    &lt;input type=&quot;text&quot; id=&quot;lesson-video&quot; placeholder=&quot;https://...&quot;&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;Thumbnail&lt;/label&gt;
-                    &lt;input type=&quot;file&quot; accept=&quot;image/*&quot; id=&quot;lesson-thumb&quot; style=&quot;padding: 0.5rem;&quot;&gt;
-                    &lt;small style=&quot;opacity: 0.6; margin-top: 0.5rem; display: block;&quot;&gt;Ou deixe em branco para ícone automático&lt;/small&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;modal-footer&quot;&gt;
-                &lt;button class=&quot;btn-editor btn-preview&quot; onclick=&quot;closeModal()&quot;&gt;Cancelar&lt;/button&gt;
-                &lt;button class=&quot;btn-editor btn-save&quot; onclick=&quot;saveLesson()&quot;&gt;Salvar Aula&lt;/button&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;!-- TOAST NOTIFICATION --&gt;
-    &lt;div class=&quot;toast&quot; id=&quot;toast&quot;&gt;Alterações salvas com sucesso!&lt;/div&gt;
-
-    &lt;script&gt;
-        // Estado da aplicação
-        let isPreview = false;
-        let currentEditingElement = null;
-        let lessons = [
-            { id: 1, title: &quot;Fundamentos do Abraço&quot;, modality: &quot;Tango&quot;, level: &quot;iniciante&quot;, duration: &quot;15:30&quot;, progress: 100 },
-            { id: 2, title: &quot;Caminhada e Base&quot;, modality: &quot;Samba&quot;, level: &quot;iniciante&quot;, duration: &quot;22:45&quot;, progress: 75 },
-            { id: 3, title: &quot;Giros Básicos&quot;, modality: &quot;Zouk&quot;, level: &quot;iniciante&quot;, duration: &quot;18:20&quot;, progress: 30 }
+    <script>
+        const lessons = [
+            { id: 1, title: "Fundamentos do Abraço", modality: "Tango", level: "Iniciante", duration: "15:30", progress: 100, icon: "🕺" },
+            { id: 2, title: "Caminhada e Base", modality: "Samba", level: "Iniciante", duration: "22:45", progress: 75, icon: "💃" },
+            { id: 3, title: "Giros Básicos", modality: "Zouk", level: "Iniciante", duration: "18:20", progress: 30, icon: "🌊" },
+            { id: 4, title: "Técnica de Condução", modality: "Valsa", level: "Intermediário", duration: "25:10", progress: 0, icon: "🎵" }
         ];
 
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', () =&gt; {
+        function showLogin() {
+            document.getElementById('home').style.display = 'none';
+            document.querySelector('.modalities').style.display = 'none';
+            document.getElementById('login').style.display = 'block';
+        }
+
+        function showHome() {
+            document.getElementById('home').style.display = 'flex';
+            document.querySelector('.modalities').style.display = 'block';
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('dashboard').classList.remove('active');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('dashboard').classList.add('active');
             renderLessons();
-            setupEditableListeners();
-        });
-
-        // Alternar entre abas
-        function switchTab(tab) {
-            document.querySelectorAll('.editor-tab').forEach(t =&gt; t.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Scroll para a seção correspondente
-            const sections = {
-                'site': 'hero-section',
-                'aulas': 'lessons-section',
-                'alunos': 'hero-section',
-                'config': 'hero-section'
-            };
-            
-            if (sections[tab]) {
-                document.getElementById(sections[tab]).scrollIntoView({ behavior: 'smooth' });
-            }
         }
 
-        // Preview Mode
-        function togglePreview() {
-            isPreview = !isPreview;
-            document.body.classList.toggle('preview-mode', isPreview);
-            document.body.classList.toggle('editor-mode', !isPreview);
-            
-            const btn = event.currentTarget;
-            if (isPreview) {
-                btn.innerHTML = '&lt;span&gt;✏️&lt;/span&gt;&lt;span&gt;Editar&lt;/span&gt;';
-                btn.style.background = 'var(--gold)';
-                btn.style.color = 'var(--primary)';
-                closeSidebar();
-            } else {
-                btn.innerHTML = '&lt;span&gt;👁️&lt;/span&gt;&lt;span&gt;Preview&lt;/span&gt;';
-                btn.style.background = 'transparent';
-                btn.style.color = 'var(--text)';
-            }
+        function logout() {
+            document.getElementById('dashboard').classList.remove('active');
+            showHome();
         }
 
-        // Editar seção (abre sidebar)
-        function editSection(sectionType) {
-            const sidebar = document.getElementById('sidebar');
-            const content = document.getElementById('sidebar-content');
-            const title = document.getElementById('sidebar-title');
-            
-            sidebar.classList.add('active');
-            document.getElementById('main-content').classList.add('sidebar-open');
-            
-            if (sectionType === 'hero') {
-                title.textContent = 'Editar Hero Section';
-                content.innerHTML = `
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;label&gt;Título Principal&lt;/label&gt;
-                        &lt;input type=&quot;text&quot; id=&quot;edit-hero-title&quot; value=&quot;Domine a Arte das Danças de Salão&quot;&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;label&gt;Subtítulo&lt;/label&gt;
-                        &lt;textarea id=&quot;edit-hero-subtitle&quot;&gt;Aprenda com os melhores professores...&lt;/textarea&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;label&gt;Texto do Botão&lt;/label&gt;
-                        &lt;input type=&quot;text&quot; id=&quot;edit-hero-cta&quot; value=&quot;Começar Agora&quot;&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;label&gt;Cor do Fundo&lt;/label&gt;
-                        &lt;div class=&quot;color-picker&quot;&gt;
-                            &lt;div class=&quot;color-option active&quot; style=&quot;background: #1a1a2e&quot; onclick=&quot;changeColor(this, '#1a1a2e')&quot;&gt;&lt;/div&gt;
-                            &lt;div class=&quot;color-option&quot; style=&quot;background: #0f3460&quot; onclick=&quot;changeColor(this, '#0f3460')&quot;&gt;&lt;/div&gt;
-                            &lt;div class=&quot;color-option&quot; style=&quot;background: #533483&quot; onclick=&quot;changeColor(this, '#533483')&quot;&gt;&lt;/div&gt;
-                            &lt;div class=&quot;color-option&quot; style=&quot;background: #1b1b2f&quot; onclick=&quot;changeColor(this, '#1b1b2f')&quot;&gt;&lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;button class=&quot;btn-editor btn-save&quot; onclick=&quot;applyHeroChanges()&quot; style=&quot;width: 100%; margin-top: 1rem;&quot;&gt;
-                        Aplicar Alterações
-                    &lt;/button&gt;
-                `;
-            } else if (sectionType === 'modalities') {
-                title.textContent = 'Editar Modalidades';
-                content.innerHTML = `
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;label&gt;Título da Seção&lt;/label&gt;
-                        &lt;input type=&quot;text&quot; value=&quot;Nossas Modalidades&quot;&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;label&gt;Layout&lt;/label&gt;
-                        &lt;select&gt;
-                            &lt;option&gt;Grid 3 colunas&lt;/option&gt;
-                            &lt;option&gt;Grid 2 colunas&lt;/option&gt;
-                            &lt;option&gt;Carrossel&lt;/option&gt;
-                        &lt;/select&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;form-group&quot;&gt;
-                        &lt;label&gt;Mostrar ícones&lt;/label&gt;
-                        &lt;label class=&quot;toggle-switch&quot;&gt;
-                            &lt;input type=&quot;checkbox&quot; checked&gt;
-                            &lt;span class=&quot;slider&quot;&gt;&lt;/span&gt;
-                        &lt;/label&gt;
-                    &lt;/div&gt;
-                `;
-            }
-        }
-
-        // Editar modalidade específica
-        function editModality(id) {
-            const card = document.querySelector(`[data-id=&quot;${id}&quot;]`);
-            const name = card.querySelector('[data-field=&quot;name&quot;]').textContent;
-            const desc = card.querySelector('[data-field=&quot;desc&quot;]').textContent;
-            const icon = card.querySelector('[data-field=&quot;icon&quot;]').textContent;
-            
-            const sidebar = document.getElementById('sidebar');
-            const content = document.getElementById('sidebar-content');
-            const title = document.getElementById('sidebar-title');
-            
-            sidebar.classList.add('active');
-            document.getElementById('main-content').classList.add('sidebar-open');
-            
-            title.textContent = 'Editar Modalidade';
-            content.innerHTML = `
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;Ícone (emoji)&lt;/label&gt;
-                    &lt;input type=&quot;text&quot; id=&quot;edit-mod-icon&quot; value=&quot;${icon}&quot; maxlength=&quot;2&quot;&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;Nome&lt;/label&gt;
-                    &lt;input type=&quot;text&quot; id=&quot;edit-mod-name&quot; value=&quot;${name}&quot;&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;form-group&quot;&gt;
-                    &lt;label&gt;Descrição&lt;/label&gt;
-                    &lt;textarea id=&quot;edit-mod-desc&quot;&gt;${desc}&lt;/textarea&gt;
-                &lt;/div&gt;
-                &lt;button class=&quot;btn-editor btn-save&quot; onclick=&quot;applyModalityChanges(${id})&quot; style=&quot;width: 100%; margin-top: 1rem;&quot;&gt;
-                    Salvar Alterações
-                &lt;/button&gt;
-            `;
-            
-            currentEditingElement = card;
-        }
-
-        // Aplicar mudanças na modalidade
-        function applyModalityChanges(id) {
-            const card = document.querySelector(`[data-id=&quot;${id}&quot;]`);
-            card.querySelector('[data-field=&quot;icon&quot;]').textContent = document.getElementById('edit-mod-icon').value;
-            card.querySelector('[data-field=&quot;name&quot;]').textContent = document.getElementById('edit-mod-name').value;
-            card.querySelector('[data-field=&quot;desc&quot;]').textContent = document.getElementById('edit-mod-desc').value;
-            
-            showToast('Modalidade atualizada!');
-            closeSidebar();
-        }
-
-        // Aplicar mudanças no hero
-        function applyHeroChanges() {
-            document.querySelector('.hero-content h1').textContent = document.getElementById('edit-hero-title').value;
-            document.querySelector('.hero-content p').textContent = document.getElementById('edit-hero-subtitle').value;
-            document.querySelector('.hero-content .btn-primary').textContent = document.getElementById('edit-hero-cta').value;
-            showToast('Hero section atualizado!');
-            closeSidebar();
-        }
-
-        // Deletar modalidade
-        function deleteModality(id) {
-            if (confirm('Tem certeza que deseja remover esta modalidade?')) {
-                document.querySelector(`[data-id=&quot;${id}&quot;]`).remove();
-                showToast('Modalidade removida');
-            }
-        }
-
-        // Adicionar nova modalidade
-        function addModality() {
-            const grid = document.getElementById('modalities-grid');
-            const newId = Date.now();
-            const newCard = document.createElement('div');
-            newCard.className = 'modality-card editable animate-in';
-            newCard.setAttribute('data-id', newId);
-            newCard.innerHTML = `
-                &lt;div class=&quot;edit-controls&quot;&gt;
-                    &lt;button class=&quot;btn-edit&quot; onclick=&quot;editModality(${newId})&quot;&gt;Editar&lt;/button&gt;
-                    &lt;button class=&quot;btn-delete&quot; onclick=&quot;deleteModality(${newId})&quot;&gt;🗑️&lt;/button&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;modality-icon editable-text&quot; data-field=&quot;icon&quot;&gt;🆕&lt;/div&gt;
-                &lt;h3 class=&quot;editable-text&quot; data-field=&quot;name&quot;&gt;Nova Modalidade&lt;/h3&gt;
-                &lt;p class=&quot;editable-text&quot; data-field=&quot;desc&quot;&gt;Clique em editar para personalizar&lt;/p&gt;
-            `;
-            grid.appendChild(newCard);
-            editModality(newId);
-        }
-
-        // Renderizar aulas no editor
         function renderLessons() {
-            const grid = document.getElementById('lessons-grid-editor');
-            grid.innerHTML = lessons.map(lesson =&gt; `
-                &lt;div class=&quot;lesson-card-editor editable&quot; data-lesson-id=&quot;${lesson.id}&quot;&gt;
-                    &lt;div class=&quot;edit-controls&quot;&gt;
-                        &lt;button class=&quot;btn-edit&quot; onclick=&quot;editLesson(${lesson.id})&quot;&gt;Editar&lt;/button&gt;
-                        &lt;button class=&quot;btn-delete&quot; onclick=&quot;deleteLesson(${lesson.id})&quot;&gt;🗑️&lt;/button&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;lesson-thumb&quot;&gt;
-                        ${getIconForModality(lesson.modality)}
-                    &lt;/div&gt;
-                    &lt;h4 style=&quot;color: var(--gold); margin-bottom: 0.5rem;&quot;&gt;${lesson.title}&lt;/h4&gt;
-                    &lt;p style=&quot;font-size: 0.9rem; opacity: 0.8;&quot;&gt;${lesson.modality} • ${lesson.level}&lt;/p&gt;
-                    &lt;p style=&quot;font-size: 0.8rem; opacity: 0.6; margin-top: 0.5rem;&quot;&gt;⏱️ ${lesson.duration}&lt;/p&gt;
-                &lt;/div&gt;
+            const grid = document.getElementById('lessons-grid');
+            grid.innerHTML = lessons.map(lesson => `
+                <div class="lesson-card">
+                    <div class="lesson-thumb">${lesson.icon}</div>
+                    <div class="lesson-info">
+                        <h4>${lesson.title}</h4>
+                        <p style="opacity: 0.8;">${lesson.modality} • ${lesson.level}</p>
+                        <p style="opacity: 0.6; font-size: 0.9rem; margin-top: 0.5rem;">⏱️ ${lesson.duration}</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${lesson.progress}%"></div>
+                        </div>
+                        <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">
+                            ${lesson.progress > 0 ? lesson.progress + '% concluído' : 'Não iniciado'}
+                        </p>
+                    </div>
+                </div>
             `).join('');
         }
+    </script>
 
-        function getIconForModality(modality) {
-            const icons = {
-                'Samba': '💃', 'Tango': '🕺', 'Valsa': '🎵', 
-                'Forró': '🔥', 'Salsa': '🌴', 'Zouk': '⚡'
-            };
-            return icons[modality] || '🎭';
-        }
-
-        // Abrir modal de adicionar aula
-        function openAddLessonModal() {
-            document.getElementById('lesson-modal').classList.add('active');
-            document.getElementById('modal-title').textContent = 'Adicionar Nova Aula';
-            // Limpar formulário
-            document.querySelectorAll('#lesson-modal input, #lesson-modal textarea').forEach(el =&gt; el.value = '');
-        }
-
-        // Editar aula existente
-        function editLesson(id) {
-            const lesson = lessons.find(l =&gt; l.id === id);
-            if (!lesson) return;
-            
-            document.getElementById('lesson-modal').classList.add('active');
-            document.getElementById('modal-title').textContent = 'Editar Aula';
-            document.getElementById('lesson-title').value = lesson.title;
-            document.getElementById('lesson-modality').value = lesson.modality;
-            document.getElementById('lesson-level').value = lesson.level;
-            document.getElementById('lesson-duration').value = lesson.duration;
-            
-            // Guardar ID para update
-            document.getElementById('lesson-modal').setAttribute('data-editing-id', id);
-        }
-
-        // Salvar aula (add ou edit)
-        function saveLesson() {
-            const title = document.getElementById('lesson-title').value;
-            const modality = document.getElementById('lesson-modality').value;
-            const level = document.getElementById('lesson-level').value;
-            const duration = document.getElementById('lesson-duration').value;
-            const desc = document.getElementById('lesson-desc').value;
-            
-            if (!title) {
-                alert('Por favor, preencha o título da aula');
-                return;
-            }
-            
-            const editingId = document.getElementById('lesson-modal').getAttribute('data-editing-id');
-            
-            if (editingId) {
-                // Update
-                const index = lessons.findIndex(l =&gt; l.id == editingId);
-                if (index !== -1) {
-                    lessons[index] = { ...lessons[index], title, modality, level, duration };
-                }
-                document.getElementById('lesson-modal').removeAttribute('data-editing-id');
-            } else {
-                // Add new
-                const newLesson = {
-                    id: Date.now(),
-                    title,
-                    modality,
-                    level,
-                    duration: duration || '20:00',
-                    progress: 0
-                };
-                lessons.push(newLesson);
-            }
-            
-            renderLessons();
-            closeModal();
-            showToast(editingId ? 'Aula atualizada!' : 'Aula adicionada com sucesso!');
-        }
-
-        // Deletar aula
-        function deleteLesson(id) {
-            if (confirm('Tem certeza que deseja remover esta aula?')) {
-                lessons = lessons.filter(l =&gt; l.id !== id);
-                renderLessons();
-                showToast('Aula removida');
-            }
-        }
-
-        // Fechar modal
-        function closeModal() {
-            document.getElementById('lesson-modal').classList.remove('active');
-            document.getElementById('lesson-modal').removeAttribute('data-editing-id');
-        }
-
-        // Fechar sidebar
-        function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('active');
-            document.getElementById('main-content').classList.remove('sidebar-open');
-            currentEditingElement = null;
-        }
-
-        // Mudar cor
-        function changeColor(element, color) {
-            document.querySelectorAll('.color-option').forEach(el =&gt; el.classList.remove('active'));
-            element.classList.add('active');
-            document.querySelector('.hero').style.background = `radial-gradient(circle at 20% 50%, ${color}66 0%, transparent 50%)`;
-        }
-
-        // Salvar conteúdo (simulação)
-        function saveContent() {
-            // Aqui você implementaria o salvamento real (localStorage, backend, etc)
-            const data = {
-                hero: {
-                    title: document.querySelector('.hero-content h1').textContent,
-                    subtitle: document.querySelector('.hero-content p').textContent,
-                    cta: document.querySelector('.hero-content .btn-primary').textContent
-                },
-                modalities: Array.from(document.querySelectorAll('.modality-card')).map(card =&gt; ({
-                    icon: card.querySelector('[data-field=&quot;icon&quot;]').textContent,
-                    name: card.querySelector('[data-field=&quot;name&quot;]').textContent,
-                    desc: card.querySelector('[data-field=&quot;desc&quot;]').textContent
-                })),
-                lessons: lessons
-            };
-            
-            localStorage.setItem('siteContent', JSON.stringify(data));
-            showToast('💾 Conteúdo salvo no navegador!');
-        }
-
-        // Publicar site
-        function publishSite() {
-            saveContent();
-            setTimeout(() =&gt; {
-                showToast('🚀 Site publicado com sucesso! URL copiada para clipboard.');
-            }, 500);
-        }
-
-        // Toast notification
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() =&gt; toast.classList.remove('show'), 3000);
-        }
-
-        // Setup listeners para edição inline
-        function setupEditableListeners() {
-            document.querySelectorAll('.editable-text').forEach(el =&gt; {
-                el.addEventListener('click', function(e) {
-                    if (isPreview) return;
-                    e.stopPropagation();
-                    
-                    // Cria input temporário para edição inline
-                    const currentText = this.textContent;
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.value = currentText;
-                    input.style.cssText = `
-                        background: rgba(0,0,0,0.8);
-                        color: var(--gold);
-                        border: 2px solid var(--gold);
-                        padding: 0.5rem;
-                        font-size: inherit;
-                        font-family: inherit;
-                        width: 100%;
-                        border-radius: 4px;
-                    `;
-                    
-                    this.style.display = 'none';
-                    this.parentNode.insertBefore(input, this.nextSibling);
-                    input.focus();
-                    input.select();
-                    
-                    const saveEdit = () =&gt; {
-                        this.textContent = input.value || currentText;
-                        this.style.display = '';
-                        input.remove();
-                        showToast('Texto atualizado');
-                    };
-                    
-                    input.addEventListener('blur', saveEdit);
-                    input.addEventListener('keypress', (e) =&gt; {
-                        if (e.key === 'Enter') saveEdit();
-                    });
-                });
-            });
-        }
-
-        // Carregar dados salvos ao iniciar
-        window.addEventListener('load', () =&gt; {
-            const saved = localStorage.getItem('siteContent');
-            if (saved) {
-                const data = JSON.parse(saved);
-                // Aplicar dados salvos...
-                console.log('Dados carregados:', data);
-            }
-        });
-
-        // Fechar modal ao clicar fora
-        document.getElementById('lesson-modal').addEventListener('click', (e) =&gt; {
-            if (e.target === document.getElementById('lesson-modal')) {
-                closeModal();
-            }
-        });
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
 </body>
 </html>
